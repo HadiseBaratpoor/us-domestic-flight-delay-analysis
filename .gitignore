@@ -1,0 +1,21 @@
+# Local Python environments and generated caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Local configuration and editor files
+.env
+.env.*
+!.env.example
+.DS_Store
+.idea/
+.vscode/
+
+# Redundant archival source; preserved locally, rendered .ipynb copy is included.
+Domestic_Flights_Data_Mining.ipynb.txt
+
+# Temporary local exports; intentionally published results live in docs/results/.
+local-exports/
