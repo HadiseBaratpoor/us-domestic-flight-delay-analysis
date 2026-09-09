@@ -1,0 +1,3 @@
+-r requirements.txt
+# Markdown parsing for local documentation-link checks.
+mistune==3.3.4

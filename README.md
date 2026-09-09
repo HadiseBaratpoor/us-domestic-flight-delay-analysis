@@ -88,10 +88,17 @@ prj-sepehran/
 ├── domestic_flights_data_mining_ipynb_txt.py # Closely related Python export
 ├── transport_data_2015_january.csv         # Shared input for both original analysis files
 ├── requirements.txt                       # Pinned review/profiling environment
+├── requirements-ci.txt                    # Additional CI documentation-check dependency
 ├── .gitignore
+├── .github/workflows/
+│   ├── repository-checks.yml               # Syntax, notebook, documentation, and HTML preview
+│   └── dataset-reproducibility.yml         # Regenerate and compare dataset reports
 ├── scripts/
-│   └── profile_dataset.py                  # Added reproducible descriptive-data check
+│   ├── profile_dataset.py                  # Added reproducible descriptive-data check
+│   ├── check_repository.py                 # Offline source and documentation validation
+│   └── check_profile.py                    # Compare generated and committed reports
 └── docs/
+    ├── AUTOMATION.md
     ├── PROJECT_REVIEW.md
     ├── DATA_DICTIONARY.md
     ├── CV_PROJECT_DESCRIPTION.md
@@ -202,6 +209,19 @@ Saved Plotly content can depend on external JavaScript/CDN resources and may not
 The dependable current outputs are the descriptive dataset profile and carrier chart above. The historical notebook stores approximately **99.72% decision-tree**, **99.65% random-forest**, **99.72% logistic-regression**, and **92.88% neural-network** accuracy. These must not be used as predictive-performance claims: the features leak the target, and the saved outputs describe **182,940 rows**, not the **201,664 rows** in the supplied CSV.
 
 Additional limitations include missing labels treated as non-delays, whole-dataset imputation before splitting, arbitrary integer encoding, no feature scaling for linear/neural models, incorrect sensitivity/specificity labels, no cross-validation, and an incomplete ROC section. Weekday counts cover unequal numbers of dates, and the airport count chart drops every incomplete record before counting. The [review](docs/PROJECT_REVIEW.md) explains each issue and its effect.
+
+## GitHub Actions
+
+Two workflows run on pushes, pull requests, and manual dispatch:
+
+| Workflow | Checks and downloadable artifacts |
+| --- | --- |
+| [Repository checks](.github/workflows/repository-checks.yml) | Python and notebook-cell syntax, notebook schema, local Markdown links/heading anchors, dependency compatibility, and a static historical notebook HTML preview |
+| [Dataset reproducibility](.github/workflows/dataset-reproducibility.yml) | Regenerates the dataset profile and carrier table, compares them with committed reports, validates chart files, and uploads the fresh JSON/CSV/PNG outputs |
+
+CI validates the descriptive workflow and repository integrity. It does not execute the historical model training or establish predictive accuracy. Notebook HTML previews retain the saved historical outputs and errors. Artifacts are retained for 14 days, subject to repository policy, and no credentials need to be configured.
+
+See [automation instructions](docs/AUTOMATION.md) for local commands, failure handling, and the exact validation boundary.
 
 ## Future improvements
 
